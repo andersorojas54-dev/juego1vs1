@@ -1,36 +1,33 @@
 import random
 
-def generate_damage(minimum, maximum): #daño aleatorio
+def generate_damage(minimum, maximum): #generador de daño
     damage = random.randint(minimum, maximum)
 
     if random.random() < 0.1:
-        print("CRITICAL HIT!")
+        print("*** CRITICAL HIT! ***")
         damage *= 2
 
     return damage
 
-def show_status(name1, hp1, max1, name2, hp2, max2,potions, potions2): #estado
+
+def show_status(name1, hp1, max1, name2, hp2, max2, potions, potions2): #barra de estados
     def health_bar(hp, max_hp):
-        #barra_salud
         total = 10
         filled = int((hp / max_hp) * total)
-        empty = total - filled             #vacio
+        empty = total - filled              #vacio
         return "[" + "❤️" * filled + "-" * empty + "]"
-    
-    
-    
+
     print("____________________________________________\n")
     print("*** STATUS ***\n")
-    print(f"{name1}: {hp1} HP {health_bar(hp1, max1)}  potions: {potions}")
+    print(f"{name1}: {hp1} HP {health_bar(hp1, max1)}  potions: {potions}\n")
     print(f"{name2}: {hp2} HP {health_bar(hp2, max2)}  potions: {potions2}")
     print("____________________________________________\n")
-    
 
-def player_turn(name, opponent_hp, player_hp, potions, max_hp): #vida
-    while True:
+
+def player_turn(name, opponent_hp, player_hp, potions, max_hp): #ataque
+    for _ in range(10):  # intenta máximo 10 veces elegir opción válida
         print(f"\n{name}'s turn:\n1. Attack \n2. Heal \n3. Special Ability\n")
-
-        option = input("Choose an action -> ") #opcion de ataque
+        option = input("Choose an action -> ")
 
         if option == "1":
             damage = generate_damage(10, 25)
@@ -66,7 +63,7 @@ def player_turn(name, opponent_hp, player_hp, potions, max_hp): #vida
     return opponent_hp, player_hp, potions
 
 
-def enemy_turn(player_hp, enemy_hp): #demage
+def enemy_turn(player_hp, enemy_hp): #turno del enemigo
     if enemy_hp <= 24:
         print("\n-> Enemy heals...")
         enemy_hp += 15
@@ -82,7 +79,7 @@ def enemy_turn(player_hp, enemy_hp): #demage
     return player_hp, enemy_hp
 
 
-def check_winner(hp1, hp2, name1, name2): #quien gano 
+def check_winner(hp1, hp2, name1, name2): #ganador
     if hp1 <= 0:
         print(f"{name1} has been defeated!")
         print(f"\n*** {name2} WINS! ***\n")
@@ -94,13 +91,14 @@ def check_winner(hp1, hp2, name1, name2): #quien gano
     return False
 
 
-def vs_computer(): #vs el computador
+def vs_computer(): #contra la maquina
     hp_player = 100
     hp_enemy = 120
     potions = 3
     potions2 = 3
-    while True:
-        show_status("Hero", hp_player, 100, "Enemy", hp_enemy, 120, potions,potions2)
+
+    for _ in range(100): 
+        show_status("Hero", hp_player, 100, "Enemy", hp_enemy, 120, potions, potions2)
 
         hp_enemy, hp_player, potions = player_turn("Hero", hp_enemy, hp_player, potions, 100)
 
@@ -113,7 +111,7 @@ def vs_computer(): #vs el computador
             break
 
 
-def player_vs_player(): #juagdor contra jugador
+def player_vs_player(): #uno contra uno
     hp1 = 100
     hp2 = 100
     potions1 = 3
@@ -131,8 +129,8 @@ def player_vs_player(): #juagdor contra jugador
         name1 = "Enemy"
         name2 = "Hero"
 
-    while True:
-        show_status(name1, hp1, 100, name2, hp2, 100, potions1,potions2)
+    for _ in range(100):  # máximo 100 turnos
+        show_status(name1, hp1, 100, name2, hp2, 100, potions1, potions2)
 
         hp2, hp1, potions1 = player_turn(name1, hp2, hp1, potions1, 100)
 
@@ -145,11 +143,10 @@ def player_vs_player(): #juagdor contra jugador
             break
 
 
-def main(): #menu
+def main(): #menu de inicio
     print("\n*** FIGHTING.io ***\n")
 
-    while True:
-                #escoge el modo de juego
+    for _ in range(100):  
         print('-> Choose a game mode: ')
         print("1. Play vs Computer")
         print("2. 2 Players Mode")
