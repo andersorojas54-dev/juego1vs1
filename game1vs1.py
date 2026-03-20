@@ -15,7 +15,7 @@ def show_status(name1, hp1, max1, name2, hp2, max2, potions, potions2): #barra d
         total = 10
         filled = int((hp / max_hp) * total)
         empty = total - filled              #vacio
-        return "[" + "❤️" * filled + "-" * empty + "]"
+        return "[" + " ❤️ " * filled + "-" * empty + "]"
 
     print("____________________________________________\n")
     print("*** STATUS ***\n")
@@ -42,7 +42,7 @@ def player_turn(name, opponent_hp, player_hp, potions, max_hp): #ataque
                 if player_hp > max_hp:
                     player_hp = max_hp
                 potions -= 1
-                print(f"\n{name} heals 20 HP!")
+                print(f"\n->{name} heals 20 HP!")
                 break
             else:
                 print("No potions left!")
@@ -51,10 +51,10 @@ def player_turn(name, opponent_hp, player_hp, potions, max_hp): #ataque
             if random.random() < 0.5:
                 damage = generate_damage(30, 50)
                 opponent_hp -= damage
-                print(f"\n- Special ability! {name} deals {damage} damage!")
+                print(f"\n-> Special ability! {name} deals {damage} damage!")
                 print(f"\n-> Enemy HP is now: {opponent_hp}\n")
             else:
-                print("\n- Special ability missed!")
+                print("\n-> Special ability missed!")
             break
 
         else:
@@ -73,7 +73,7 @@ def enemy_turn(player_hp, enemy_hp): #turno del enemigo
     else:
         damage = generate_damage(15, 20)
         player_hp -= damage
-        print(f"\n- Enemy deals {damage} damage!")
+        print(f"\n-> Enemy deals {damage} damage!")
         print(f"\n** Your HP is now: {player_hp} **")
 
     return player_hp, enemy_hp
